@@ -1,0 +1,2 @@
+# Wipro-NMS-Automated-Network-Device-Monitoring-and-Configuration-with-Fault-Management-Task
+This project automates network device management using SNMP, NETCONF, and RESTCONF. Tasks include monitoring router interfaces, configuring/removing a VLAN, retrieving interface stats, and simulating faults. Java tools manage alarms and correlate issues like packet loss and high utilization to identify root causes.
