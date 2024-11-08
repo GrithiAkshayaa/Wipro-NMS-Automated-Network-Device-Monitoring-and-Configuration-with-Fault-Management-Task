@@ -1,0 +1,7 @@
+output:
+
+Alarm generated for interface: ge-0/0/0
+Reason: Packet Loss Detected
+Alarm generated for interface: ge-0/0/1
+Reason: High Utilization
+Root Cause Analysis: The high utilization on ge-0/0/1 may contribute to the packet loss on ge-0/0/0.

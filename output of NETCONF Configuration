@@ -1,0 +1,19 @@
+OUTPUT BEFORE VLAN REMOVAL:
+Current VLAN Configuration: 
+<interfaces>
+    <interface>
+        <name>vlan100</name>
+        <description>Test VLAN</description>
+        <enabled>true</enabled>
+        <ipv4>
+            <address>
+                <ip>10.10.10.1</ip>
+                <prefix-length>24</prefix-length>
+            </address>
+        </ipv4>
+    </interface>
+</interfaces>
+
+OUTPUT AFTER VLAN REMOVAL:
+VLAN Removed: 
+<interfaces></interfaces>

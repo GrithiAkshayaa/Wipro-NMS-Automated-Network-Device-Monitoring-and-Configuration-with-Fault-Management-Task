@@ -1,0 +1,49 @@
+import org.snmp4j.*;
+import org.snmp4j.smi.*;
+import org.snmp4j.mp.*;
+import org.snmp4j.transport.*;
+
+public class SNMPMonitor {
+    private static final String SNMP_COMMUNITY = "public";
+    private static final String SNMP_HOST = "router_ip"; // IP of the router
+    private static final int SNMP_PORT = 161;
+
+    public static void main(String[] args) {
+        try {
+            // SNMP Manager setup
+            TransportMapping transport = new DefaultUdpTransportMapping();
+            Snmp snmp = new Snmp(transport);
+            transport.listen();
+
+            // SNMP Get request to fetch device system info
+            OID sysDescr = new OID("1.3.6.1.2.1.1.1.0"); // System description OID
+            OID sysUpTime = new OID("1.3.6.1.2.1.1.3.0"); // Uptime OID
+            OID sysName = new OID("1.3.6.1.2.1.1.5.0"); // Hostname OID
+
+            // Send SNMP Get request
+            PDU request = new PDU();
+            request.add(new VariableBinding(sysDescr));
+            request.add(new VariableBinding(sysUpTime));
+            request.add(new VariableBinding(sysName));
+            request.setType(PDU.GET);
+
+            // Create target and send request
+            Target target = new CommunityTarget();
+            ((CommunityTarget) target).setCommunity(new OctetString(SNMP_COMMUNITY));
+            target.setAddress(new UdpAddress(SNMP_HOST + "/" + SNMP_PORT));
+            target.setVersion(SnmpConstants.version2c);
+
+            ResponseEvent response = snmp.get(request, target);
+
+            // Process response
+            if (response != null && response.getResponse() != null) {
+                System.out.println("System Info:");
+                System.out.println("Hostname: " + response.getResponse().get(2).getVariable().toString());
+                System.out.println("Uptime: " + response.getResponse().get(1).getVariable().toString());
+                System.out.println("OS Version: " + response.getResponse().get(0).getVariable().toString());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}

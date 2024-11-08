@@ -1,0 +1,18 @@
+Output:
+
+Interface Statistics: {
+  "interfaces": [
+    {
+      "name": "ge-0/0/0",
+      "status": "up",
+      "error-counters": {"input-errors": 0, "output-errors": 1},
+      "bandwidth-utilization": 70
+    },
+    {
+      "name": "ge-0/0/1",
+      "status": "up",
+      "error-counters": {"input-errors": 2, "output-errors": 0},
+      "bandwidth-utilization": 85
+    }
+  ]
+}

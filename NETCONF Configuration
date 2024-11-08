@@ -1,0 +1,52 @@
+Add NETCONF4J dependency:
+<dependency>
+    <groupId>org.opendaylight</groupId>
+    <artifactId>netconf4j</artifactId>
+    <version>1.0.0</version>
+</dependency>
+
+CODE:
+import org.opendaylight.netconf.client.NetconfClient;
+import org.opendaylight.netconf.client.NetconfDevice;
+import org.opendaylight.netconf.client.NetconfClientFactory;
+import org.opendaylight.netconf.client.api.NetconfOperationException;
+import org.opendaylight.netconf.client.api.NetconfSession;
+import org.opendaylight.netconf.client.api.NetconfMessage;
+
+public class NETCONFManager {
+
+    private static final String DEVICE_IP = "router_ip";
+    private static final String USERNAME = "admin";
+    private static final String PASSWORD = "password";
+
+    public static void main(String[] args) {
+        try {
+            // Connect to the router using NETCONF
+            NetconfDevice device = new NetconfDevice(DEVICE_IP, USERNAME, PASSWORD);
+            NetconfSession session = device.getSession();
+            NetconfClient client = NetconfClientFactory.create(session);
+
+            // Create and send the configuration for VLAN 100
+            String vlanConfig = "<config><interfaces><interface><name>vlan100</name><description>Test VLAN</description><enabled>true</enabled></interface></interfaces></config>";
+            client.editConfig(vlanConfig);
+
+            // Retrieve the current VLAN configuration
+            NetconfMessage configResponse = client.getConfig();
+            System.out.println("Current VLAN Configuration: " + configResponse.getMessage());
+
+            // Wait for 5 minutes
+            Thread.sleep(300000);
+
+            // Remove VLAN 100 configuration
+            String deleteVlanConfig = "<config><interfaces><interface><name>vlan100</name></interface></interfaces></config>";
+            client.editConfig(deleteVlanConfig);
+
+            // Confirm VLAN removal
+            NetconfMessage removeResponse = client.getConfig();
+            System.out.println("VLAN Removed: " + removeResponse.getMessage());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}

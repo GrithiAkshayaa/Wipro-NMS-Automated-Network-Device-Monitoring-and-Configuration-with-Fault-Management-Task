@@ -1,0 +1,32 @@
+import java.util.*;
+
+public class FaultManagement {
+    static class Alarm {
+        String interfaceName;
+        String reason;
+        long timestamp;
+
+        Alarm(String interfaceName, String reason) {
+            this.interfaceName = interfaceName;
+            this.reason = reason;
+            this.timestamp = System.currentTimeMillis();
+        }
+    }
+
+    public static void main(String[] args) {
+        // Simulate alarms
+        List<Alarm> alarms = new ArrayList<>();
+        alarms.add(new Alarm("ge-0/0/0", "Packet Loss Detected"));
+        alarms.add(new Alarm("ge-0/0/1", "High Utilization"));
+
+        // Correlate alarms
+        for (Alarm alarm : alarms) {
+            System.out.println("Alarm generated for interface: " + alarm.interfaceName);
+            System.out.println("Reason: " + alarm.reason);
+        }
+
+        // Root cause analysis
+        String rootCause = "The high utilization on ge-0/0/1 may contribute to the packet loss on ge-0/0/0.";
+        System.out.println("Root Cause Analysis: " + rootCause);
+    }
+}

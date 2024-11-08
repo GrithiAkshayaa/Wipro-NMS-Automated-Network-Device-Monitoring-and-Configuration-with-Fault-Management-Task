@@ -1,0 +1,31 @@
+Add HttpClient dependency:
+<dependency>
+    <groupId>org.apache.httpcomponents</groupId>
+    <artifactId>httpclient</artifactId>
+    <version>4.5.13</version>
+</dependency>
+
+
+CODE:
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.util.EntityUtils;
+
+public class RESTCONFClient {
+    private static final String RESTCONF_URL = "http://router_ip/restconf/data/interfaces";
+
+    public static void main(String[] args) {
+        try (CloseableHttpClient client = HttpClients.createDefault()) {
+            HttpGet request = new HttpGet(RESTCONF_URL);
+            request.addHeader("Authorization", "Bearer token");
+
+            HttpResponse response = client.execute(request);
+            String result = EntityUtils.toString(response.getEntity());
+            System.out.println("Interface Statistics: " + result);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}

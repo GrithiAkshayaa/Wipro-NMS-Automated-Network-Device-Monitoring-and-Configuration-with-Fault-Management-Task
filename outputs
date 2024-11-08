@@ -1,0 +1,58 @@
+// SNMP
+SNMP Monitoring:
+Hostname: Router123
+Uptime: 1234567
+OS Version: Cisco IOS 15.2
+
+
+// VLAN
+VLAN Configured: 
+<config>
+    <interfaces>
+        <interface>
+            <name>vlan100</name>
+            <description>Test VLAN</description>
+            <enabled>true</enabled>
+            <ip-address>10.10.10.1/24</ip-address>
+        </interface>
+    </interfaces>
+</config>
+
+(Rest of program pauses for 5 minutes...)
+
+VLAN Removed: 
+<config>
+    <interfaces>
+        <!-- vlan100 no longer present -->
+    </interfaces>
+</config>
+
+
+// RESTCONF
+RESTCONF Interface Statistics: 
+{
+    "interfaces": [
+        {
+            "name": "ge-0/0/0",
+            "operational-status": "up",
+            "input-errors": 5,
+            "output-errors": 0,
+            "bandwidth-utilization": 45
+        },
+        {
+            "name": "ge-0/0/1",
+            "operational-status": "up",
+            "input-errors": 0,
+            "output-errors": 1,
+            "bandwidth-utilization": 85
+        }
+    ]
+}
+
+
+// FAULT ALARM
+Fault Management Alarms:
+Interface: ge-0/0/0, Reason: Packet Loss Detected
+Interface: ge-0/0/1, Reason: High Utilization
+
+Root Cause Analysis: The high utilization on ge-0/0/1 may contribute to the packet loss on ge-0/0/0.
